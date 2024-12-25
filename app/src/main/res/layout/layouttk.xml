@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- TextView hiển thị tổng số từ đã học -->
+    <TextView
+        android:id="@+id/totalLearnedWordsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tổng số từ đã học: 0"
+        android:textSize="18sp"
+        android:padding="8dp" />
+
+    <!-- LinearLayout chứa các chủ đề -->
+    <LinearLayout
+        android:id="@+id/topicsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+
+</LinearLayout>
