@@ -6,9 +6,27 @@ public class AccountDTO {
     private String address;
     private String birthday;
     private String image;
+    private String userName;
+    private String password;
+
     private int streakCount;
 
     // Getter và Setter
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public int getAccountId() {
         return accountId;
     }

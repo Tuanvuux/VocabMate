@@ -72,6 +72,7 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("isLoggedIn", true);
                     editor.putInt("accountId", account.getAccountId()); // Giả sử AccountDTO có phương thức getId()
+                    editor.putInt("streakCount", account.getStreakCount());
                     editor.apply();
 
                     // Chuyển đến MenuActivity

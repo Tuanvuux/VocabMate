@@ -1,5 +1,7 @@
 package com.example.vocabmate.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.vocabmate.Activity.FlashCardActivity;
+import com.example.vocabmate.Activity.TestActivity;
 import com.example.vocabmate.Activity.TopicListGActivity;
 import com.example.vocabmate.R;
 
@@ -37,6 +40,10 @@ public class HomepageFragment extends Fragment {
         testButton = view.findViewById(R.id.test);
         reminderButton = view.findViewById(R.id.reminder);
 
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        int streakCount = sharedPreferences.getInt("streakCount", 1);  // Mặc định là 0 nếu không tìm thấy
+
+        updateStreak(streakCount);
         // Cài đặt các sự kiện click
         setupClickListeners();
 
@@ -79,7 +86,10 @@ public class HomepageFragment extends Fragment {
     }
 
     private void openTestScreen() {
-        // TODO: Chuyển đến màn hình Kiểm tra
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), TestActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void openReminderScreen() {

@@ -1,4 +1,5 @@
 package com.example.vocabmate.Fragment;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ public class TopicFragment extends Fragment {
 
     private ListView topicListView;
     private TopicAdapter topicAdapter;
-    private List<Topic> topicList = new ArrayList<>(); // Khởi tạo topicList
+    private List<Topic> topicList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -61,8 +62,8 @@ public class TopicFragment extends Fragment {
                 // Chuyển sang VocabularyFragment
                 getParentFragmentManager()
                         .beginTransaction()
-//                        .replace(R.id.fragment_container, fragment)
-                        .addToBackStack(null)
+                        .replace(R.id.fragment_container, fragment) // Chuyển sang Fragment mới
+                        .addToBackStack(null) // Thêm vào stack để quay lại nếu cần
                         .commit();
             }
         });

@@ -39,7 +39,11 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 
+
         </activity>
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <activity
             android:name=".Activity.TopicListActivity"
@@ -49,6 +53,9 @@
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Activity.FlashCardActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".Activity.TestActivity"
             android:theme="@style/Theme.AppCompat.Light" />
 
 
