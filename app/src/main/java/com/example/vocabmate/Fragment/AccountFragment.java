@@ -8,59 +8,117 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.vocabmate.Activity.LoginActivity;
+import com.example.vocabmate.Adapter.EditInfoFragment;
+import com.example.vocabmate.Model.AccountDTO;
 import com.example.vocabmate.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.bumptech.glide.Glide;
+import com.example.vocabmate.Service.ApiClient;
+import com.example.vocabmate.Service.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+
 public class AccountFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ImageView profileImage;
+    private TextView fullNameTextView, addressTextView, birthdayTextView, editInfo;
+    private Button logoutButton;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AccountFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccountFragment newInstance(String param1, String param2) {
-        AccountFragment fragment = new AccountFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        // Khởi tạo View
+        profileImage = view.findViewById(R.id.profile_image);
+        fullNameTextView = view.findViewById(R.id.full_name);
+        addressTextView = view.findViewById(R.id.address);
+        birthdayTextView = view.findViewById(R.id.birthday);
+        logoutButton = view.findViewById(R.id.logoutButton);
+        editInfo = view.findViewById(R.id.editInfo);
+
+        // Gọi API để lấy dữ liệu
+        fetchUserInfo();
+        //click editInfo
+        editInfo.setOnClickListener(v -> {
+            // Thay vì Intent, sử dụng FragmentTransaction
+            EditInfoFragment editInfoFragment = new EditInfoFragment();
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, editInfoFragment)  // R.id.fragment_container là ID của container chứa các Fragment trong Activity
+                    .addToBackStack(null)  // Nếu muốn có thể quay lại fragment trước đó
+                    .commit();
+        });
+
+
+        logoutButton.setOnClickListener(v -> {
+            // Navigate to login screen and clear back stack
+            Intent intent = new Intent(requireContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+    private void fetchUserInfo() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+
+        String username = sharedPreferences.getString("username", null);
+        String pw = sharedPreferences.getString("pw", null);
+
+        Retrofit retrofit = ApiClient.getClient();
+        ApiService apiService = retrofit.create(ApiService.class);
+        apiService.login(username, pw).enqueue(new Callback<AccountDTO>() {
+            @Override
+            public void onResponse(Call<AccountDTO> call, Response<AccountDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    AccountDTO account = response.body();
+
+                    // Hiển thị thông tin người dùng
+                    if (fullNameTextView != null) {
+                        fullNameTextView.setText("Họ và tên: " + account.getFullName());
+                    }
+                    if (addressTextView != null) {
+                        addressTextView.setText("Địa chỉ: " + account.getAddress());
+                    }
+                    if (birthdayTextView != null) {
+                        birthdayTextView.setText("Ngày sinh: " + account.getBirthday());
+                    }
+                    if (profileImage != null) {
+                        Glide.with(requireContext())
+                                .load(account.getImage())
+                                .circleCrop()
+                                .into(profileImage);
+                    }
+                } else {
+                    Log.e("AccountFragment", "API response failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccountDTO> call, Throwable t) {
+                Log.e("AccountFragment", "API call failed: " + t.getMessage());
+            }
+        });
     }
+
+
 }

@@ -8,8 +8,10 @@ import com.example.vocabmate.Model.Vocab;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -43,5 +45,16 @@ public interface ApiService {
 
     @GET("vocab/topic/{topicId}")
     Call<List<Vocab>> getVocabByTopic(@Path("topicId") int topicId);
+
+    @POST("accounts/register")
+    Call<AccountDTO> registerAccount(@Body AccountDTO newAccount);
+
+    // API lấy thông tin tài khoản theo accountId
+    @GET("accounts/{accountId}")
+    Call<AccountDTO> getAccountById(@Path("accountId") long accountId);
+
+    // API cập nhật thông tin tài khoản theo accountId
+    @POST("accounts/{accountId}")
+    Call<AccountDTO> updateAccount(@Path("accountId") long accountId, @Body AccountDTO updatedAccount);
 
 }

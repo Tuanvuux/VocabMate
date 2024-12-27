@@ -22,12 +22,12 @@
 
             <!-- Avatar Image -->
             <ImageView
-                android:id="@+id/avatarImage"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/girl"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="Avatar"/>
+                android:id="@+id/profile_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/girl" />
 
             <!-- Personal Details -->
             <LinearLayout
@@ -48,25 +48,23 @@
                     android:layout_marginBottom="8dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/full_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Họ và tên: Hoàng Phương Thảo"
-                    android:textSize="16sp"
-                    android:textColor="#000000"/>
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Quê quán: Quảng Bình"
-                    android:textSize="16sp"
-                    android:textColor="#000000"/>
+                    android:layout_marginTop="8dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/birthday"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ngày sinh: 14 - 12 - 2003"
-                    android:textSize="16sp"
-                    android:textColor="#000000"/>
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -95,9 +93,10 @@
             android:paddingHorizontal="16dp">
 
             <TextView
+                android:id="@+id/editInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cài đặt"
+                android:text="Chỉnh sửa thông tin"
                 android:textSize="16sp"
                 android:paddingVertical="12dp"
                 android:drawablePadding="8dp"

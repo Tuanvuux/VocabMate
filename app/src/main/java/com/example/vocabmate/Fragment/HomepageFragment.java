@@ -1,6 +1,6 @@
-package com.example.vocabmate.Activity;
+package com.example.vocabmate.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.vocabmate.Fragment.TopicFragment;
+import com.example.vocabmate.Activity.FlashCardActivity;
+import com.example.vocabmate.Activity.TopicListGActivity;
 import com.example.vocabmate.R;
 
 public class HomepageFragment extends Fragment {
@@ -71,7 +72,10 @@ public class HomepageFragment extends Fragment {
 
 
     private void openFlashcardScreen() {
-        // TODO: Chuyển đến màn hình Thẻ ghi nhớ
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), TopicListGActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void openTestScreen() {

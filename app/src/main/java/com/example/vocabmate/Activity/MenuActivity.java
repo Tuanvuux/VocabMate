@@ -11,13 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.vocabmate.Fragment.AccountFragment;
+import com.example.vocabmate.Fragment.HomepageFragment;
 import com.example.vocabmate.Fragment.LearnFragment;
 import com.example.vocabmate.Fragment.StatisticsFragment;
 import com.example.vocabmate.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class HomePageActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

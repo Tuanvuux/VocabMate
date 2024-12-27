@@ -1,6 +1,7 @@
 package com.example.vocabmate.Model;
 
 public class AccountDTO {
+    private int accountId;
     private String fullName;
     private String address;
     private String birthday;
@@ -8,6 +9,14 @@ public class AccountDTO {
     private int streakCount;
 
     // Getter và Setter
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
     public String getFullName() {
         return fullName;
     }
