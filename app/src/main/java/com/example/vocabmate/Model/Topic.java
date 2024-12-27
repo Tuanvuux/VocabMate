@@ -38,4 +38,8 @@ public class Topic {
     public void setTopicImg(String topicImg) {
         this.topicImg = topicImg;
     }
+    @Override
+    public String toString() {
+        return topicName + " (" + topicStrans + ")";
+    }
 }

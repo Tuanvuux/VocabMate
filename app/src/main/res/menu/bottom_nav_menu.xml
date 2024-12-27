@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/home"
-
-        android:title="Home" />
-
+        android:id="@+id/nav_home"
+        android:title="Trang chủ"
+        android:icon="@drawable/home_selector"
+        android:orderInCategory="1" />
     <item
-        android:id="@+id/search"
-
-        android:title="Search" />
-
+        android:id="@+id/nav_learn"
+        android:title="Học từ vựng"
+        android:icon="@drawable/learning_selector"
+        android:orderInCategory="2" />
     <item
-        android:id="@+id/profile"
-
-        android:title="Profile" />
+        android:id="@+id/nav_statistic"
+        android:title="Thống kê"
+        android:icon="@drawable/growth_selector"
+        android:orderInCategory="3" />
+    <item
+        android:id="@+id/nav_account"
+        android:title="Tài khoản"
+        android:icon="@drawable/setting_selector"
+        android:orderInCategory="4" />
 </menu>

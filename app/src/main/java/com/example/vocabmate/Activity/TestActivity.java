@@ -22,12 +22,12 @@ public class TestActivity extends Activity {
         btnMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to detailed vocabulary testing screen (Topic mode)
-                Intent intent = new Intent(TestActivity.this, VocabularyTestActivity.class);
-                intent.putExtra("mode", "topic");
+                // Chuyển đến màn hình TopicListActivity
+                Intent intent = new Intent(TestActivity.this, TopicListActivity.class);
                 startActivity(intent);
             }
         });
+
 
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override

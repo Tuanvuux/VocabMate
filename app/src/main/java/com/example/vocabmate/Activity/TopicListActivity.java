@@ -40,14 +40,22 @@ public class TopicListActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Topic>>() {
             @Override
             public void onResponse(Call<List<Topic>> call, Response<List<Topic>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    displayTopics(response.body());
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        displayTopics(response.body());
+                    } else {
+                        Toast.makeText(TopicListActivity.this, "Danh sách chủ đề trống", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(TopicListActivity.this, "Lỗi API: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Topic>> call, Throwable t) {
-                Toast.makeText(TopicListActivity.this, "Lỗi khi tải danh sách chủ đề", Toast.LENGTH_SHORT).show();
+                // Ghi ra log chi tiết lỗi
+                t.printStackTrace();
+                Toast.makeText(TopicListActivity.this, "Lỗi khi tải danh sách chủ đề: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -71,6 +79,7 @@ public class TopicListActivity extends AppCompatActivity {
             view.setOnClickListener(v -> {
                 Intent intent = new Intent(TopicListActivity.this, VocabularyTestActivity.class);
                 intent.putExtra("topicId", topic.getTopicId());
+                intent.putExtra("mode", "topic");
                 startActivity(intent);
             });
 

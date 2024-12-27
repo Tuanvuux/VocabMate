@@ -2,9 +2,10 @@ package com.example.vocabmate.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.vocabmate.Adapter.TopicsAdapter;
 import com.example.vocabmate.R;
 import com.example.vocabmate.Service.ApiClient;
 import com.example.vocabmate.Service.ApiService;
@@ -17,10 +18,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends Activity {
+public class StatisticActivity extends Activity {
 
     private TextView totalLearnedWordsTextView;
-    private LinearLayout topicsLayout;
+    private ListView topicsLayout;  // Sử dụng ListView thay vì LinearLayout
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
 
         // Ánh xạ các view
         totalLearnedWordsTextView = findViewById(R.id.totalLearnedWordsTextView);
-        topicsLayout = findViewById(R.id.topicsLayout);
+        topicsLayout = findViewById(R.id.topicsLayout);  // Sử dụng ListView thay vì LinearLayout
 
         // Lấy tổng số từ đã học
         getTotalLearnedWords();
@@ -49,7 +50,7 @@ public class MainActivity extends Activity {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int totalLearnedWords = response.body();
-                    totalLearnedWordsTextView.setText(String.format("Tổng số từ đã học: %d", totalLearnedWords));
+                    totalLearnedWordsTextView.setText(String.format("%d", totalLearnedWords));
                 } else {
                     totalLearnedWordsTextView.setText("Lỗi khi lấy dữ liệu");
                 }
@@ -75,29 +76,21 @@ public class MainActivity extends Activity {
                     List<StatisticTopic> topics = response.body();
                     displayTopics(topics);
                 } else {
-                    TextView errorTextView = new TextView(MainActivity.this);
-                    errorTextView.setText("Lỗi khi lấy dữ liệu");
-                    topicsLayout.addView(errorTextView);
+                    totalLearnedWordsTextView.setText("Lỗi khi lấy dữ liệu");
                 }
             }
 
             @Override
             public void onFailure(Call<List<StatisticTopic>> call, Throwable t) {
-                TextView errorTextView = new TextView(MainActivity.this);
-                errorTextView.setText("Lỗi kết nối: " + t.getMessage());
-                topicsLayout.addView(errorTextView);
+                totalLearnedWordsTextView.setText("Lỗi kết nối: " + t.getMessage());
             }
         });
     }
 
     // Hàm hiển thị danh sách các chủ đề lên giao diện
     private void displayTopics(List<StatisticTopic> topics) {
-        for (StatisticTopic topic : topics) {
-            TextView topicTextView = new TextView(this);
-            topicTextView.setText(String.format("%s: %d/%d", topic.getTopicName(), topic.getLearnedCount(), topic.getTotalCount()));
-            topicTextView.setPadding(16, 16, 16, 16);
-
-            topicsLayout.addView(topicTextView);
-        }
+        // Sử dụng adapter để hiển thị danh sách các chủ đề lên ListView
+        TopicsAdapter adapter = new TopicsAdapter(this, topics,1 );
+        topicsLayout.setAdapter(adapter);
     }
 }

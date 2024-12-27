@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/container_flashcard">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/backArrowButton"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/back_page" />
+
+
+        <!-- Topic Name -->
+        <TextView
+            android:id="@+id/topicNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:text="Topic Name"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <!-- Topic Image -->
+        <ImageView
+            android:id="@+id/topicImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/placeholder_image"
+            android:contentDescription="Topic Image"
+            android:scaleType="centerCrop"/>
+
+        <FrameLayout
+            android:id="@+id/flashcardContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginEnd="27dp"
+            android:background="@drawable/bg_flashcard">
+
+            <!-- Front Side -->
+            <LinearLayout
+                android:id="@+id/frontCard"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="240dp">
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/flag_icon"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="top|start"
+                        android:src="@drawable/flag_united_kingdom" />
+                    <TextView
+                        android:id="@+id/english"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="English"
+                        android:layout_marginTop="21dp"
+                        android:layout_marginStart="65dp"
+                        android:layout_gravity="top|start"
+                        android:textSize="16sp"/>
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/vocabTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vocab"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/chewy_regular"
+                    android:textColor="#F6BD3A"
+                    android:textSize="40sp"
+                    android:lineSpacingExtra="2dp"
+                    android:padding="4dp"
+                    android:textStyle="bold"/>
+
+
+                <TextView
+                    android:id="@+id/transcriptionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transcription"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/exampleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="Example"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Back Side -->
+            <LinearLayout
+                android:id="@+id/backCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/flag_icon_vietnam"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="top|start"
+                        android:src="@drawable/flag_vietnam" />
+                    <TextView
+                        android:id="@+id/covietnam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vietnamese"
+                        android:layout_marginTop="21dp"
+                        android:layout_marginStart="65dp"
+                        android:layout_gravity="top|start"
+                        android:textSize="16sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <ImageView
+                            android:id="@+id/vocabImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="35dp"
+                            android:scaleType="centerCrop"/>
+
+                        <TextView
+                            android:id="@+id/meaningTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Meaning"
+                            android:layout_gravity="center"
+                            android:textSize="30sp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+            <!-- Left Arrow Button -->
+            <ImageView
+                android:id="@+id/leftArrowButton"
+                android:layout_width="32dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_arrow_left"
+                android:contentDescription="Left Arrow"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_gravity="center|left"
+                android:layout_marginStart="10dp"/>
+            <ImageView
+                android:id="@+id/rightArrowButton"
+                android:layout_width="32dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_arrow_right"
+                android:contentDescription="Right Arrow"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_gravity="center|right"
+                android:layout_marginEnd="10dp"/>
+        </FrameLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,4 +34,14 @@ public interface ApiService {
 
     @GET("topic")
     Call<List<Topic>> getTopics();
+
+    @GET("learned/vocabLearnedByTopic")
+    Call<List<Vocab>> getLearnedVocabByTopicAndAccount(
+            @Query("accountId") int accountId,
+            @Query("topicId") int topicId
+    );
+
+    @GET("vocab/topic/{topicId}")
+    Call<List<Vocab>> getVocabByTopic(@Path("topicId") int topicId);
+
 }

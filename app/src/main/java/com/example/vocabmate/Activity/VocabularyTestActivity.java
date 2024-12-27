@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.vocabmate.Model.Vocab;
@@ -25,12 +26,12 @@ public class VocabularyTestActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     private EditText editTextAnswer;
     private Button btnCheckAnswer, btnSkip;
-    private ApiClient apiClient;
-
-    private String correctAnswer; // Câu trả lời đúng
-    private int currentIndex = 0; // Chỉ số câu hỏi hiện tại
-    private int score = 0; // Điểm số ban đầu
-    private List<Vocab> vocabList = new ArrayList<>(); // Danh sách từ vựng
+    private String mode;
+    private int topicId;
+    private String correctAnswer;
+    private int currentIndex = 0;
+    private int score = 0;
+    private List<Vocab> vocabList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,83 +44,118 @@ public class VocabularyTestActivity extends AppCompatActivity {
         btnCheckAnswer = findViewById(R.id.btnCheckAnswer);
         btnSkip = findViewById(R.id.btnSkip);
 
-        // Lấy dữ liệu từ API
-        fetchVocabData();
+        // Lấy thông tin từ Intent
+        mode = getIntent().getStringExtra("mode");
+        topicId = getIntent().getIntExtra("topicId", -1);
+
+        // Xử lý chế độ test
+        if ("random".equals(mode)) {
+            fetchRandomVocabData();
+        } else if ("topic".equals(mode) && topicId != -1) {
+            fetchVocabDataByTopic(topicId);
+        } else {
+            Toast.makeText(this, "Chế độ hoặc chủ đề không hợp lệ!", Toast.LENGTH_SHORT).show();
+            Log.e("VocabularyTestActivity", "Invalid mode or topicId");
+        }
 
         // Xử lý khi nhấn "Kiểm tra đáp án"
         btnCheckAnswer.setOnClickListener(v -> {
             String userAnswer = editTextAnswer.getText().toString().trim();
             if (!userAnswer.isEmpty()) {
                 if (userAnswer.equalsIgnoreCase(correctAnswer)) {
-                    score++; // Tăng điểm nếu trả lời đúng
+                    score++;
                     Toast.makeText(this, "Câu trả lời đúng!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Câu trả lời sai. Đáp án đúng: " + correctAnswer, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Sai. Đáp án: " + correctAnswer, Toast.LENGTH_SHORT).show();
                 }
-
-                // Điều hướng sang câu hỏi tiếp theo hoặc hoàn thành bài kiểm tra
-                if (currentIndex < vocabList.size() - 1) {
-                    currentIndex++;
-                    displayQuestion(vocabList.get(currentIndex));
-                } else {
-                    displayFinalScore(); // Hiển thị điểm số cuối cùng
-                }
+                nextQuestion();
             } else {
                 Toast.makeText(this, "Vui lòng nhập câu trả lời", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Xử lý khi nhấn "Bỏ qua"
-        btnSkip.setOnClickListener(v -> {
-            if (currentIndex < vocabList.size() - 1) {
-                currentIndex++;
-                displayQuestion(vocabList.get(currentIndex));
-            } else {
-                displayFinalScore(); // Hiển thị điểm số cuối cùng
-            }
-        });
+        btnSkip.setOnClickListener(v -> nextQuestion());
     }
 
-    // Phương thức lấy dữ liệu từ API
-    private void fetchVocabData() {
+    private void nextQuestion() {
+        if (currentIndex < vocabList.size() - 1) {
+            currentIndex++;
+            displayQuestion(vocabList.get(currentIndex));
+        } else {
+            displayFinalScore();
+        }
+    }
 
-        ApiService vocabApi = apiClient.getClient().create(ApiService.class);
-
+    private void fetchRandomVocabData() {
+        ApiService vocabApi = ApiClient.getClient().create(ApiService.class);
         vocabApi.getTest().enqueue(new Callback<List<Vocab>>() {
             @Override
             public void onResponse(Call<List<Vocab>> call, Response<List<Vocab>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     vocabList = response.body();
                     if (!vocabList.isEmpty()) {
-                        currentIndex = 0;
-                        displayQuestion(vocabList.get(currentIndex)); // Hiển thị câu hỏi đầu tiên
+                        displayQuestion(vocabList.get(currentIndex));
                     } else {
-                        Toast.makeText(VocabularyTestActivity.this, "Không có dữ liệu từ API!", Toast.LENGTH_SHORT).show();
+                        showEmptyDataToast();
                     }
                 } else {
-                    Log.e("API Error", "Failed to fetch vocab data: " + response.message());
-                    Toast.makeText(VocabularyTestActivity.this, "Lỗi API: " + response.message(), Toast.LENGTH_SHORT).show();
+                    showApiError(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Vocab>> call, Throwable t) {
-                Log.e("API Error", "Failed: " + t.getMessage());
-                Toast.makeText(VocabularyTestActivity.this, "Không thể kết nối API!", Toast.LENGTH_SHORT).show();
+                showApiFailure(t.getMessage());
             }
         });
     }
 
-    // Hiển thị câu hỏi
-    private void displayQuestion(Vocab vocab) {
-        textViewQuestion.setText("What is the vocab for \"" + vocab.getMeaning() + "\"?");
-        correctAnswer = vocab.getVocab(); // Lấy từ vựng đúng
-        editTextAnswer.setText(""); // Reset câu trả lời
+    private void fetchVocabDataByTopic(int topicId) {
+        ApiService vocabApi = ApiClient.getClient().create(ApiService.class);
+        vocabApi.getVocabsByTopic(topicId).enqueue(new Callback<List<Vocab>>() {
+            @Override
+            public void onResponse(Call<List<Vocab>> call, Response<List<Vocab>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    vocabList = response.body();
+                    if (!vocabList.isEmpty()) {
+                        displayQuestion(vocabList.get(currentIndex));
+                    } else {
+                        showEmptyDataToast();
+                    }
+                } else {
+                    showApiError(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Vocab>> call, Throwable t) {
+                showApiFailure(t.getMessage());
+            }
+        });
     }
 
-    // Phương thức hiển thị điểm số cuối cùng
+    private void displayQuestion(Vocab vocab) {
+        textViewQuestion.setText(vocab.getMeaning());
+        correctAnswer = vocab.getVocab();
+        editTextAnswer.setText("");
+    }
+
     private void displayFinalScore() {
-        Toast.makeText(this, "Bạn đã hoàn thành bài kiểm tra! Điểm của bạn: " + score + "/" + vocabList.size(), Toast.LENGTH_LONG).show();
-        // Có thể chuyển hướng sang màn hình kết quả hoặc hoạt động khác nếu cần
+        Toast.makeText(this, "Hoàn thành! Điểm: " + score + "/" + vocabList.size(), Toast.LENGTH_LONG).show();
+    }
+
+    private void showEmptyDataToast() {
+        Toast.makeText(this, "Không có dữ liệu từ API!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showApiError(String message) {
+        Log.e("API Error", "Failed: " + message);
+        Toast.makeText(this, "Lỗi API: " + message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showApiFailure(String error) {
+        Log.e("API Failure", "Error: " + error);
+        Toast.makeText(this, "Không thể kết nối API!", Toast.LENGTH_SHORT).show();
     }
 }

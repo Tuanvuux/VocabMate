@@ -1,25 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="16dp">
-
-    <!-- TextView hiển thị tổng số từ đã học -->
-    <TextView
-        android:id="@+id/totalLearnedWordsTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tổng số từ đã học: 0"
-        android:textSize="18sp"
-        android:padding="8dp" />
-
-    <!-- LinearLayout chứa các chủ đề -->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- Nội dung chính -->
     <LinearLayout
-        android:id="@+id/topicsLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#F8F5E6">
+
+        <!-- Hình tròn -->
+        <LinearLayout
+            android:id="@+id/circle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_yellow"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- TextView căn giữa -->
+            <TextView
+                android:id="@+id/totalLearnedWordsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="01"
+                android:textColor="#FFFFFF"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!--        &lt;!&ndash; Hình ảnh &ndash;&gt;-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="80dp"-->
+        <!--            android:src="@drawable/landscape"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginBottom="16dp" />-->
+
+        <!-- Danh sách các chủ đề -->
+        <ListView
+            android:id="@+id/topicsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:divider="#CCCCCC"
+            android:dividerHeight="1dp"
+            android:padding="8dp" />
     </LinearLayout>
 
 </LinearLayout>
