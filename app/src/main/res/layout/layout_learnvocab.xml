@@ -4,34 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="#F8F5E6"
     android:gravity="center">
 
-    <!-- Hiển thị từ vựng -->
-    <TextView
-        android:id="@+id/textViewQuestion"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="#000"
-        android:text="Từ vựng"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
 
-    <!-- Hiển thị nghĩa từ vựng -->
-    <TextView
-        android:id="@+id/textViewMeaning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#888"
-        android:text="Nghĩa"/>
+        <!-- Hiển thị từ vựng -->
+        <TextView
+            android:id="@+id/textViewQuestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vocab"
+            android:layout_marginLeft="20dp"
+            android:textSize="40sp"
+            android:fontFamily="@font/chewy_regular"
+            android:textColor="#F6BD3A"
+            android:textStyle="bold"
+            android:padding="4dp"
+            android:lineSpacingExtra="2dp" />
 
-    <!-- Hiển thị ví dụ -->
-    <TextView
-        android:id="@+id/textViewExample"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#888"
-        android:text="Ví dụ"/>
+        <!-- Hiển thị nghĩa từ vựng -->
+        <TextView
+            android:id="@+id/textViewMeaning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nghĩa"
+            android:textSize="20sp"
+            android:padding="4dp" />
+    </LinearLayout>
 
     <!-- Hiển thị phiên âm -->
     <TextView
@@ -42,19 +49,37 @@
         android:textColor="#888"
         android:text="Phiên âm"/>
 
+    <!-- Hiển thị ví dụ -->
+    <TextView
+        android:id="@+id/textViewExample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Ví dụ"
+        android:textColor="#FF000000"
+        android:textSize="16sp" />
+
     <!-- Hiển thị ảnh từ vựng -->
     <ImageView
         android:id="@+id/vocabImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:src="@drawable/placeholder_image" />
+        android:src="@drawable/placeholder_image"
+        android:contentDescription="Topic Image"
+        android:scaleType="centerCrop"/>
 
     <!-- Nút tiếp theo -->
     <Button
         android:id="@+id/btnSkip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tiếp theo"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@id/editTextAnswer"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="#599F3C"
+        android:text="Tiếp theo "
+        android:textStyle="bold"
+        android:textColor="#FFF"/>
 </LinearLayout>
