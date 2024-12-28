@@ -1,13 +1,16 @@
 package com.example.vocabmate.Service;
 
 import com.example.vocabmate.Model.AccountDTO;
+import com.example.vocabmate.Model.LearnHistory;
 import com.example.vocabmate.Model.StatisticTopic;
 import com.example.vocabmate.Model.Topic;
 import com.example.vocabmate.Model.Vocab;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -56,5 +59,12 @@ public interface ApiService {
     // API cập nhật thông tin tài khoản theo accountId
     @POST("accounts/{accountId}")
     Call<AccountDTO> updateAccount(@Path("accountId") long accountId, @Body AccountDTO updatedAccount);
+
+    @POST("learned/vocabLearn")
+    Call<Boolean> saveLearnHistory(@Body LearnHistory learnHistory);
+
+
+
+
 
 }

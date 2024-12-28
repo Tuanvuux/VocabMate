@@ -52,7 +52,7 @@ public class TopicFragment extends Fragment {
 
                 // Tạo Bundle và truyền dữ liệu
                 Bundle bundle = new Bundle();
-                bundle.putLong("topicId", selectedTopic.getTopicId());
+                bundle.putInt("topicId", selectedTopic.getTopicId());
                 bundle.putString("topicName", selectedTopic.getTopicName());
 
                 // Tạo Fragment VocabularyFragment và gán Bundle

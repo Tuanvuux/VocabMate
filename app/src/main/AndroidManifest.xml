@@ -63,7 +63,16 @@
             android:name=".Activity.VocabularyTestActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
+            android:name=".Activity.LearnRandomActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
             android:name=".Activity.VocabActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".Activity.LearnTopicActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".Activity.LearnVocabByTopicActivity"
             android:theme="@style/Theme.AppCompat.Light" />
 
 
